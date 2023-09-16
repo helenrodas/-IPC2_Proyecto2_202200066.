@@ -18,8 +18,8 @@ class listaAlturas:
     def imprimir(self):
         print("")
         actual=self.primero
-        print("--------Alturas--------")
+        # print("--------Alturas--------")
         while actual!= None:
             print(f"Altura: {actual.CAlturas.altura}, Letra: {actual.CAlturas.letra}")
             actual=actual.siguiente
-        print("-----------------------")
+        # print("-----------------------")

@@ -1,7 +1,7 @@
 from nodoMensajes import nodoMensajes
 from CMensajes import CMensajes
 
-class listaContenido:
+class listaMensajes:
     def __init__(self):
         self.primero = None
         self.ultimo = None
@@ -19,7 +19,8 @@ class listaContenido:
         actual=self.primero
         # print("*********Lista Contenido********")
         while actual!= None:
-            print(f"Nombre Mensaje: {actual.CMensajes.nombre_mensaje}, Sistema Drones: {actual.CMensajes.nombre_mensaje}")
+            print("----------------------------------------")
+            print(f"Nombre Mensaje: {actual.CMensajes.nombre_mensaje}, Sistema Drones: {actual.CMensajes.sistema_drones}")
+            print("----------------------------------------")
             actual.CMensajes.listaInstrucciones.imprimir()
             actual=actual.siguiente
-            print("---------------------------------------------------------")

@@ -3,6 +3,10 @@ from listaDrones import listaDrones
 from listaSistemasDrones import listaSistemasDrones
 from listaContenido import listaContenido
 from listaAlturas import listaAlturas
+from listaInstrucciones import listaInstrucciones
+from listaMensajes import listaMensajes
+from CMensajes import CMensajes
+from CInstrucciones import CInstrucciones
 from CAlturas import CAlturas
 from CContenido import CContenido
 from CDron import CDron
@@ -66,14 +70,25 @@ class readFile():
                 NodoListaMensajes = root.findall('listaMensajes')
                 for nodoMensajes in NodoListaMensajes:
                     lista_mensajes = nodoMensajes.findall('Mensaje')
+                    self.lista_mensajes_temp = listaMensajes()
                     for nodo_mensajes in lista_mensajes:
                         nombre_mensaje = nodo_mensajes.get('nombre')
-                        print(nombre_mensaje)
+                        # print(nombre_mensaje)
                         
                         lista_sistema_drones = nodo_mensajes.findall('sistemaDrones')
                         for nodo_sistema_drones in lista_sistema_drones:
                             sistema = nodo_sistema_drones.text
-                            print(sistema)
+                            # print(sistema)
+                        lista_instrucciones = nodo_mensajes.findall('instrucciones')
+                        self.lista_instruciones_temp = listaInstrucciones()
+                        for nodo_instrucciones in lista_instrucciones:
+                            lista_instruccion = nodo_instrucciones.findall('instruccion')
+                            for nodo_instruccion in lista_instruccion:
+                                dron_instruccion = nodo_instruccion.get('dron')
+                                posicion = nodo_instruccion.text
+                                self.lista_instruciones_temp.insertar(CInstrucciones(dron_instruccion,posicion))
+                        self.lista_mensajes_temp.insertar(CMensajes(nombre_mensaje,sistema,self.lista_instruciones_temp))
+                self.lista_mensajes_temp.imprimir()
         except Exception as err:
             print("Error:", err)
     
