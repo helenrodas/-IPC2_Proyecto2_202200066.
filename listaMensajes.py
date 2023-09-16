@@ -1,26 +1,25 @@
-from nodoContenido import nodoContenido
-from CContenido import CContenido
-from listaAlturas import listaAlturas
+from nodoMensajes import nodoMensajes
+from CMensajes import CMensajes
 
 class listaContenido:
     def __init__(self):
         self.primero = None
         self.ultimo = None
         
-    def insertar(self,CContenido):
+    def insertar(self,CMensajes):
         if self.primero is None:
-            self.primero=nodoContenido(CContenido)
+            self.primero=nodoMensajes(CMensajes)
             return
         actual=self.primero
         while actual.siguiente:
             actual=actual.siguiente
-        actual.siguiente=nodoContenido(CContenido)
+        actual.siguiente=nodoMensajes(CMensajes)
 
     def imprimir(self):
         actual=self.primero
         # print("*********Lista Contenido********")
         while actual!= None:
-            print(f"Dron: {actual.CContenido.dron}")
-            actual.CContenido.listaAlturas.imprimir()
+            print(f"Nombre Mensaje: {actual.CMensajes.nombre_mensaje}, Sistema Drones: {actual.CMensajes.nombre_mensaje}")
+            actual.CMensajes.listaInstrucciones.imprimir()
             actual=actual.siguiente
             print("---------------------------------------------------------")

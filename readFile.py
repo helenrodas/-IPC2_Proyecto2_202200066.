@@ -31,7 +31,6 @@ class readFile():
                     for sistemas in lista_sistemas:
                         nombre_sistema = sistemas.get('nombre')
                         # print("nombre sistema: ",nombre_sistema)
-
                         lista_altura_max = sistemas.findall('alturaMaxima')
                         for nodo_altura_max in lista_altura_max:
                             altura_max = nodo_altura_max.text
@@ -41,7 +40,7 @@ class readFile():
                         for nodo_cantidad_drones in lista_cantidad_drones:
                             cantidad_drones = nodo_cantidad_drones.text
                             # print("cantidad:",cantidad_drones)
-                        self.lista_sistemas_temp.insertar(CSistemasDrones(nombre_sistema,altura_max,cantidad_drones))
+                        # self.lista_sistemas_temp.insertar(CSistemasDrones(nombre_sistema,altura_max,cantidad_drones))
                     # self.lista_sistemas_temp.imprimir()
                         lista_contenido = sistemas.findall('contenido')
                         self.lista_contenido_temp = listaContenido()
@@ -49,7 +48,7 @@ class readFile():
                             dron_actual = nodo_contenido.find('dron')
                             dron = dron_actual.text
                             
-                            self.lista_contenido_temp.insertar(CContenido(dron))
+                            # self.lista_contenido_temp.insertar(CContenido(dron))
                             lista_alturas = nodo_contenido.findall('alturas')
                             self.lista_alturas_temp = listaAlturas()
                             for nodo_alturas in lista_alturas:
@@ -58,10 +57,23 @@ class readFile():
                                     altura = nodo_altura.get('valor')
                                     letra = nodo_altura.text
                                     self.lista_alturas_temp.insertar(CAlturas(altura,letra))
-                                self.lista_alturas_temp.imprimir()
-                        self.lista_contenido_temp.imprimir()
+                                # self.lista_alturas_temp.imprimir()
+                            self.lista_contenido_temp.insertar(CContenido(dron,self.lista_alturas_temp))
+                        self.lista_sistemas_temp.insertar(CSistemasDrones(nombre_sistema,altura_max,cantidad_drones,self.lista_contenido_temp))
                     self.lista_sistemas_temp.imprimir()
-                                
+
+                print("*************Mensajes*************")
+                NodoListaMensajes = root.findall('listaMensajes')
+                for nodoMensajes in NodoListaMensajes:
+                    lista_mensajes = nodoMensajes.findall('Mensaje')
+                    for nodo_mensajes in lista_mensajes:
+                        nombre_mensaje = nodo_mensajes.get('nombre')
+                        print(nombre_mensaje)
+                        
+                        lista_sistema_drones = nodo_mensajes.findall('sistemaDrones')
+                        for nodo_sistema_drones in lista_sistema_drones:
+                            sistema = nodo_sistema_drones.text
+                            print(sistema)
         except Exception as err:
             print("Error:", err)
     

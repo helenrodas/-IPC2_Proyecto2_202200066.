@@ -1,5 +1,6 @@
 from nodoSistemasDrones import nodoSistemasDrones
 from CSistemasDrones import CSistemasDrones
+from listaContenido import listaContenido
 
 class listaSistemasDrones:
     def __init__(self):
@@ -16,10 +17,13 @@ class listaSistemasDrones:
         actual.siguiente=nodoSistemasDrones(CSistemasDrones)
 
     def imprimir(self):
-        print("")
         actual=self.primero
-        print("******************Sistema Drones******************")
+        print("")
+        print("*********************Sistema Drones*********************")
         while actual!= None:
-            print(f"Nombre Sistema: {actual.CSistemasDrones.nombre_sistema},Altura maxima: {actual.CSistemasDrones.altura_max},Cantidad Drones:{actual.CSistemasDrones.cantidad_drones} ")
+            print("---------------------------------------------------------")
+            print(f"Nombre Sistema: {actual.CSistemasDrones.nombre_sistema}, Altura maxima: {actual.CSistemasDrones.altura_max}, Cantidad Drones: {actual.CSistemasDrones.cantidad_drones} ")
+            print("---------------------------------------------------------")
+            actual.CSistemasDrones.listaContenido.imprimir()
             actual=actual.siguiente
-        print("**************************************************")
+        print("********************************************************")
