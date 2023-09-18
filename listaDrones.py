@@ -7,12 +7,16 @@ class listaDrones:
         self.ultimo = None
         
     def insertar(self,CDron):
-        if self.primero is None:
-            self.primero=nodoDron(CDron)
+        nuevo_nodo = nodoDron(CDron)
+        
+        if self.primero is None or CDron.nombre_dron < self.primero.CDron.nombre_dron:
+            nuevo_nodo.siguiente = self.primero
+            self.primero=nuevo_nodo
             return
         actual=self.primero
-        while actual.siguiente:
+        while actual.siguiente and actual.siguiente.CDron.nombre_dron < CDron.nombre_dron:
             actual=actual.siguiente
+        nuevo_nodo.siguiente = actual.siguiente
         actual.siguiente=nodoDron(CDron)
 
     def imprimir(self):
@@ -23,3 +27,15 @@ class listaDrones:
             print("Dron:",actual.CDron.nombre_dron)
             actual=actual.siguiente
         print("*****************************")
+    
+    def __iter__(self):
+        self.actual = self.primero
+        return self
+
+    def __next__(self):
+        if self.actual is not None:
+            valor_actual = self.actual
+            self.actual = self.actual.siguiente
+            return valor_actual
+        else:
+            raise StopIteration
