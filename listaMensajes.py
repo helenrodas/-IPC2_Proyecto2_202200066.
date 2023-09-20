@@ -6,13 +6,26 @@ class listaMensajes:
         self.primero = None
         self.ultimo = None
         
+    # def insertar(self,CMensajes):
+    #     if self.primero is None:
+    #         self.primero=nodoMensajes(CMensajes)
+    #         return
+    #     actual=self.primero
+    #     while actual.siguiente:
+    #         actual=actual.siguiente
+    #     actual.siguiente=nodoMensajes(CMensajes)
+        
     def insertar(self,CMensajes):
-        if self.primero is None:
-            self.primero=nodoMensajes(CMensajes)
+        nuevo_nodo = nodoMensajes(CMensajes)
+        
+        if self.primero is None or CMensajes.nombre_mensaje < self.primero.CMensajes.nombre_mensaje:
+            nuevo_nodo.siguiente = self.primero
+            self.primero=nuevo_nodo
             return
         actual=self.primero
-        while actual.siguiente:
+        while actual.siguiente and actual.siguiente.CMensajes.nombre_mensaje < CMensajes.nombre_mensaje:
             actual=actual.siguiente
+        nuevo_nodo.siguiente = actual.siguiente
         actual.siguiente=nodoMensajes(CMensajes)
 
     def imprimir(self):

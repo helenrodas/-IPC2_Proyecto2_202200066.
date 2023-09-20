@@ -54,7 +54,7 @@ class FrmInicio:
         self.gestionMensajes_indicate.place(x=3,y=330,width=5,height=30)
         self.gestionMensajes_btn.bind("<Button-1>", self.gestion_mensajes_menu)
 
-        self.ayuda_btn = tk.Button(self.options_frame,text='Ayuda',font=('Bold',12),fg='black',bd=0,bg='lightblue',width=14,height=1)
+        self.ayuda_btn = tk.Button(self.options_frame,text='Ayuda',font=('Bold',12),fg='black',bd=0,bg='lightblue',width=14,height=1, command = self.ayuda)
         self.ayuda_btn.place(x=8,y=390)
         self.ayuda_indicate = tk.Label(self.options_frame,text='',bg='#158aff')
         self.ayuda_indicate.place(x=3,y=390,width=5,height=30)
@@ -68,48 +68,40 @@ class FrmInicio:
         self.star_page()
     
     def gestion_drones_menu(self, event):
-        # Get the button's coordinates and dimensions
         button_x = self.gestionDrones_btn.winfo_rootx()
         button_y = self.gestionDrones_btn.winfo_rooty()
         button_width = self.gestionDrones_btn.winfo_width()
         button_height = self.gestionDrones_btn.winfo_height()
 
-        # Calculate the position for the menu
         menu_x = button_x + button_width
         menu_y = button_y + button_height
 
-        # Create a menu for the button
         gestion_drones_menu = tk.Menu(self.gestionDrones_btn, tearoff=0)
 
-        # Add options to the menu
         gestion_drones_menu.add_command(label="Listado Drones", command=self.crear_tabla_listaDrones)
         gestion_drones_menu.add_separator()
         gestion_drones_menu.add_command(label="Agrega Dron", command=self.agregar_dron)
 
-        # Display the menu at the calculated position
         gestion_drones_menu.post(menu_x, menu_y)
     
     
     def gestion_mensajes_menu(self, event):
-        # Get the button's coordinates and dimensions
         button_x = self.gestionMensajes_btn.winfo_rootx()
         button_y = self.gestionMensajes_btn.winfo_rooty()
         button_width = self.gestionMensajes_btn.winfo_width()
         button_height = self.gestionMensajes_btn.winfo_height()
 
-        # Calculate the position for the menu
         menu_x = button_x + button_width
         menu_y = button_y + button_height
 
-        # Create a menu for the button
         gestion_mensajes_menu = tk.Menu(self.gestionMensajes_btn, tearoff=0)
 
-        # Add options specific to "Gestión de Mensajes" here
         gestion_mensajes_menu.add_command(label="Listado Mensajes", command=self.crear_tabla_listaMensajes)
         gestion_mensajes_menu.add_separator()
-        gestion_mensajes_menu.add_command(label="Ver instrucciones de mensajes", command=self.clear_page)
+        gestion_mensajes_menu.add_command(label="Ver instrucciones de mensajes", command=self.mostrar_tablaMensajes)
+        gestion_mensajes_menu.add_separator()
+        gestion_mensajes_menu.add_command(label="Grafica instrucciones", command=self.clear_page)
         
-        # Display the menu at the calculated position
         gestion_mensajes_menu.post(menu_x, menu_y)
 
     
@@ -167,7 +159,7 @@ class FrmInicio:
         for i, dron in enumerate(listado_drones):
             if nombre_temp == dron.CDron.nombre_dron:
                 bandera = True
-                print(nombre_temp, "=", dron.CDron.nombre_dron)
+                messagebox.showinfo("Error", "el dron ya se encuentra en la lista.")
             
         if bandera == False:
             print(nombre_temp, "=", dron.CDron.nombre_dron)
@@ -210,11 +202,9 @@ class FrmInicio:
                 
         tvMensajes.bind('<<TreeviewSelect>>',item_selected)
         
-        buscar_btn = tk.Button(listaMensajes_frame, text="Buscar Instrucciones", width=12, height=1, bg="LightGreen", command=lambda:self.crear_tabla_listaMensajes)
         lb.pack()
         tvMensajes.pack()
         tvMensajes.pack(side="left") 
-        buscar_btn.pack(pady=20)
         listaMensajes_frame.pack(pady=20)
     
     
@@ -239,6 +229,66 @@ class FrmInicio:
         tvInstrucciones.pack()
         tvInstrucciones.pack(side="left") 
         listaMensajes_frame.pack(pady=20)
+        
+    
+    def mostrar_tablaMensajes(self):
+        self.clear_page()
+        tablaMensajes_frame = tk.Frame(self.main_frame)
+        tvMensajes = ttk.Treeview(tablaMensajes_frame,columns=("colMensajes"))
+        tvMensajes.column("#0",width=90)
+        tvMensajes.column("colMensajes",width=90,anchor=CENTER)
+        
+        tvMensajes.heading("#0",text="Nombre",anchor=CENTER)
+        tvMensajes.heading("colMensajes", text="Sistema", anchor=CENTER)
+        
+        lb = tk.Label(tablaMensajes_frame,text="Lista de Mensajes",font=('Bold',20))
+        listado_mensajes = self.readFile.get_listaMensajes()
+        
+        for i, mensaje in enumerate(listado_mensajes):
+            tvMensajes.insert("", "end", text=(mensaje.CMensajes.nombre_mensaje), values=(mensaje.CMensajes.sistema_drones))
+        
+        def item_selected(event):
+            for selected_item in tvMensajes.selection():
+                item = tvMensajes.item(selected_item)
+                valuesList = item['values']
+                if valuesList:
+                    sistema = valuesList[0]
+                    print(sistema)
+
+                    listaImstrucciones = listado_mensajes.encontrar_sistema(sistema)
+                    
+                    self.mostrar_instrucciones(listaImstrucciones)
+                
+        tvMensajes.bind('<<TreeviewSelect>>',item_selected)
+        
+        lb.pack()
+        tvMensajes.pack()
+        tvMensajes.pack(side="left") 
+        tablaMensajes_frame.pack(pady=20)
+    
+    
+    def mostrar_instrucciones(self, listaInstrucciones):
+        tablaMensajes_frame = tk.Frame(self.main_frame)
+        tvInstrucciones = ttk.Treeview(tablaMensajes_frame, columns=( "Valor", "Mensaje", "Tiempo"))
+        
+        tvInstrucciones.column("#0", width=90)
+        tvInstrucciones.column("Valor", width=90, anchor=tk.CENTER)
+        tvInstrucciones.column("Mensaje", width=90, anchor=tk.CENTER)
+        tvInstrucciones.column("Tiempo", width=90, anchor=tk.CENTER)
+        
+        tvInstrucciones.heading("#0", text="Dron", anchor=tk.CENTER)
+        tvInstrucciones.heading("Valor", text="Valor", anchor=tk.CENTER)
+        tvInstrucciones.heading("Mensaje", text="Mensaje", anchor=tk.CENTER)
+        tvInstrucciones.heading("Tiempo", text="Tiempo", anchor=tk.CENTER)
+        
+        lb = tk.Label(tablaMensajes_frame, text="Instrucciones", font=('Bold', 20))
+        for instruccion in listaInstrucciones:
+            tvInstrucciones.insert("", "end", text=instruccion.CInstrucciones.dron_actual, values=(instruccion.CInstrucciones.posicion, "valora", "valorB"))
+        
+        lb.pack()
+        tvInstrucciones.pack()
+        tvInstrucciones.pack(side="left")
+        tablaMensajes_frame.pack(pady=20)
     
     
     
@@ -258,6 +308,17 @@ class FrmInicio:
             # reader = readFile()
             self.readFile.cargarXml(file_path)
             messagebox.showinfo("cargar Archivo", "Archivo cargado exitosamente.")
+    
+    def ayuda(self):
+        self.clear_page()
+        ayuda_frame = tk.Frame(self.main_frame)
+        lb = tk.Label(ayuda_frame,text="Ayuda\n",font=('Bold',20))
+        lb2 = tk.Label(ayuda_frame,text="Nombre: Helen Janet Rodas Castro \n Carnet: 202200066 \n Curso:IPC 2 \n Seccion: D \n Semestre: 4to. Semestre\n",font=('italic',14))
+        link = tk.Label(ayuda_frame,text="Link: Pronto...",font=('italic',14))
+        lb.pack()
+        lb2.pack()
+        link.pack()
+        ayuda_frame.pack(pady=20)
 
 
 if __name__ == "__main__":
