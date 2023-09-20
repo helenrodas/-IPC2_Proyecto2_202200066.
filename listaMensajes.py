@@ -25,6 +25,15 @@ class listaMensajes:
             actual.CMensajes.listaInstrucciones.imprimir()
             actual=actual.siguiente
     
+    
+    def encontrar_sistema(self,nombre):
+        actual = self.primero
+        while actual!= None:
+            if nombre == actual.CMensajes.sistema_drones:
+                return actual.CMensajes.listaInstrucciones
+            actual = actual.siguiente
+    
+    
     def __iter__(self):
         self.actual = self.primero
         return self

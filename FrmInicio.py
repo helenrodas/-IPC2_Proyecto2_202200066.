@@ -41,17 +41,23 @@ class FrmInicio:
         self.gestionDrones_btn.place(x=8,y=210)
         self.gestionDrones_indicate = tk.Label(self.options_frame,text='',bg='#158aff')
         self.gestionDrones_indicate.place(x=3,y=210,width=5,height=30)
-        self.gestionDrones_btn.bind("<Button-1>", self.show_gestion_drones_menu)
+        self.gestionDrones_btn.bind("<Button-1>", self.gestion_drones_menu)
+
+        self.gestionSistemasDrones_btn = tk.Button(self.options_frame,text='Gestion Sistemas',font=('Bold',12),fg='black',bd=0,bg='lightblue',width=14,height=1)
+        self.gestionSistemasDrones_btn.place(x=8,y=270)
+        self.gestionSistemasDrones_indicate = tk.Label(self.options_frame,text='',bg='#158aff')
+        self.gestionSistemasDrones_indicate.place(x=3,y=270,width=5,height=30)
 
         self.gestionMensajes_btn = tk.Button(self.options_frame,text='Gestion Mensajes',font=('Bold',12),fg='black',bd=0,bg='lightblue',width=14,height=1)
-        self.gestionMensajes_btn.place(x=8,y=270)
+        self.gestionMensajes_btn.place(x=8,y=330)
         self.gestionMensajes_indicate = tk.Label(self.options_frame,text='',bg='#158aff')
-        self.gestionMensajes_indicate.place(x=3,y=270,width=5,height=30)
+        self.gestionMensajes_indicate.place(x=3,y=330,width=5,height=30)
+        self.gestionMensajes_btn.bind("<Button-1>", self.gestion_mensajes_menu)
 
         self.ayuda_btn = tk.Button(self.options_frame,text='Ayuda',font=('Bold',12),fg='black',bd=0,bg='lightblue',width=14,height=1)
-        self.ayuda_btn.place(x=8,y=330)
+        self.ayuda_btn.place(x=8,y=390)
         self.ayuda_indicate = tk.Label(self.options_frame,text='',bg='#158aff')
-        self.ayuda_indicate.place(x=3,y=330,width=5,height=30)
+        self.ayuda_indicate.place(x=3,y=390,width=5,height=30)
 
         #Pagina principal que va cambiando segun la opcion
         self.main_frame = tk.Frame(root,highlightbackground='gray', highlightthickness=2)
@@ -61,7 +67,7 @@ class FrmInicio:
         
         self.star_page()
     
-    def show_gestion_drones_menu(self, event):
+    def gestion_drones_menu(self, event):
         # Get the button's coordinates and dimensions
         button_x = self.gestionDrones_btn.winfo_rootx()
         button_y = self.gestionDrones_btn.winfo_rooty()
@@ -83,6 +89,29 @@ class FrmInicio:
         # Display the menu at the calculated position
         gestion_drones_menu.post(menu_x, menu_y)
     
+    
+    def gestion_mensajes_menu(self, event):
+        # Get the button's coordinates and dimensions
+        button_x = self.gestionMensajes_btn.winfo_rootx()
+        button_y = self.gestionMensajes_btn.winfo_rooty()
+        button_width = self.gestionMensajes_btn.winfo_width()
+        button_height = self.gestionMensajes_btn.winfo_height()
+
+        # Calculate the position for the menu
+        menu_x = button_x + button_width
+        menu_y = button_y + button_height
+
+        # Create a menu for the button
+        gestion_mensajes_menu = tk.Menu(self.gestionMensajes_btn, tearoff=0)
+
+        # Add options specific to "Gestión de Mensajes" here
+        gestion_mensajes_menu.add_command(label="Listado Mensajes", command=self.crear_tabla_listaMensajes)
+        gestion_mensajes_menu.add_separator()
+        gestion_mensajes_menu.add_command(label="Ver instrucciones de mensajes", command=self.clear_page)
+        
+        # Display the menu at the calculated position
+        gestion_mensajes_menu.post(menu_x, menu_y)
+
     
     def star_page(self):
         start_frame = tk.Frame(self.main_frame)
@@ -119,14 +148,16 @@ class FrmInicio:
         lb = tk.Label(agregarDron_frame,text="Agregar Dron\n",font=('Bold',20))
         
         nombre_lbl = Label(agregarDron_frame, text="Ingresa nombre dron: ", font=("Arial", 14), justify="center")
-        nombre_input = Entry(agregarDron_frame, textvariable=dron)
-        agregarDron_btn = tk.Button(agregarDron_frame, text="Agregar", width=12, height=1, bg="LightGreen", command=self.registrar_dron(dron))
-
+        nombre_input = tk.Entry(agregarDron_frame, textvariable=dron)
+        agregar_btn = tk.Button(agregarDron_frame, text="Agregar", width=12, height=1, bg="LightGreen", command=lambda:self.registrar_dron(nombre_input.get()))
+        # nombre_input.delete(0,'end')  Revisar este metodo porque aun no funciona
+        
         lb.pack()
         nombre_lbl.pack()
         nombre_input.pack()
-        agregarDron_btn.pack(pady=20)
+        agregar_btn.pack(pady=20)
         agregarDron_frame.pack(pady=20)
+        
     
     def registrar_dron(self,nombreDron):
         bandera = False
@@ -137,16 +168,79 @@ class FrmInicio:
             if nombre_temp == dron.CDron.nombre_dron:
                 bandera = True
                 print(nombre_temp, "=", dron.CDron.nombre_dron)
-                break  # Sal del bucle cuando encuentres una coincidencia
             
         if bandera == False:
             print(nombre_temp, "=", dron.CDron.nombre_dron)
             dron_nuevo = CDron(nombre_temp)
             listado_drones.insertar(dron_nuevo)
+            messagebox.showinfo("Agregar Dron", "Dron agregado exitosamente.")
+            listado_drones.imprimir()
             return True
         else:
             return False
         
+    
+    def crear_tabla_listaMensajes(self):
+        self.clear_page()
+        listaMensajes_frame = tk.Frame(self.main_frame)
+        tvMensajes = ttk.Treeview(listaMensajes_frame,columns=("colMensajes"))
+        tvMensajes.column("#0",width=90)
+        tvMensajes.column("colMensajes",width=90,anchor=CENTER)
+        
+        tvMensajes.heading("#0",text="Nombre",anchor=CENTER)
+        tvMensajes.heading("colMensajes", text="Sistema", anchor=CENTER)
+        
+        lb = tk.Label(listaMensajes_frame,text="Lista de Mensajes",font=('Bold',20))
+        listado_mensajes = self.readFile.get_listaMensajes()
+        
+        for i, mensaje in enumerate(listado_mensajes):
+            tvMensajes.insert("", "end", text=(mensaje.CMensajes.nombre_mensaje), values=(mensaje.CMensajes.sistema_drones))
+        
+        def item_selected(event):
+            for selected_item in tvMensajes.selection():
+                item = tvMensajes.item(selected_item)
+                valuesList = item['values']
+                if valuesList:
+                    sistema = valuesList[0]
+                    print(sistema)
+
+                    listaImstrucciones = listado_mensajes.encontrar_sistema(sistema)
+                    
+                    self.crear_tabla_listaInstrucciones(listaImstrucciones)
+                
+        tvMensajes.bind('<<TreeviewSelect>>',item_selected)
+        
+        buscar_btn = tk.Button(listaMensajes_frame, text="Buscar Instrucciones", width=12, height=1, bg="LightGreen", command=lambda:self.crear_tabla_listaMensajes)
+        lb.pack()
+        tvMensajes.pack()
+        tvMensajes.pack(side="left") 
+        buscar_btn.pack(pady=20)
+        listaMensajes_frame.pack(pady=20)
+    
+    
+    def crear_tabla_listaInstrucciones(self,listaInstrucciones):
+        
+        listaMensajes_frame = tk.Frame(self.main_frame)
+        tvInstrucciones = ttk.Treeview(listaMensajes_frame,columns=("colInstrucciones"))
+        tvInstrucciones.delete(*tvInstrucciones.get_children())
+        tvInstrucciones.delete(*tvInstrucciones.get_children())
+        tvInstrucciones.column("#0",width=90)
+        tvInstrucciones.column("colInstrucciones",width=90,anchor=CENTER)
+        
+        tvInstrucciones.heading("#0",text="Dron",anchor=CENTER)
+        tvInstrucciones.heading("colInstrucciones", text="Valor", anchor=CENTER)
+        
+        lb = tk.Label(listaMensajes_frame,text="Lista Instrucciones",font=('Bold',20))
+        for i, instruccion in enumerate(listaInstrucciones):
+            tvInstrucciones.insert("", "end", text=(instruccion.CInstrucciones.dron_actual), values=(instruccion.CInstrucciones.posicion))
+        
+        
+        lb.pack()
+        tvInstrucciones.pack()
+        tvInstrucciones.pack(side="left") 
+        listaMensajes_frame.pack(pady=20)
+    
+    
     
     def clear_page(self):
         for frame in self.main_frame.winfo_children():

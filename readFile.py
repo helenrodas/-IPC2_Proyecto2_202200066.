@@ -86,6 +86,9 @@ class readFile():
     
     def get_listaDrones(self):
         return self.lista_drones_temp
+    
+    def get_listaMensajes(self):
+        return self.lista_mensajes_temp
 
 # app = readFile()
 # app.cargarXml()
