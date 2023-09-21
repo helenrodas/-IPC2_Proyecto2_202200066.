@@ -25,6 +25,50 @@ class listaContenido:
             actual=actual.siguiente
             print("---------------------------------------------------------")
     
+    def get_listaAlturas(self,dron):
+        actual = self.primero
+        while actual!= None:
+            if dron == actual.CContenido.dron:
+                return actual.CContenido.listaAlturas
+            actual = actual.siguiente
+    
+    
+    # def generar_dot(self):
+    #     dot_code = """
+        
+    #         <tr>
+    #             <td>Nombre Dron</td>
+                
+            
+    #     """
+
+    #     aux = self.primero
+    #     while aux:
+    #         dot_code += f"""
+                
+                    
+    #                 <td>{aux.CContenido.dron}</td>
+                    
+
+    #         """
+    #         aux = aux.siguiente
+    #     dot_code += f"""
+    #     </tr>
+    #     """
+
+    #     actual1 = self.primero
+    #     dot_code += """<tr><td border="0"></td>"""
+    #     while actual1:
+    #         dot_code += """
+        
+            
+    #             <td>Letra Dron</td>
+    #         """   
+    #         actual1 = actual1.siguiente
+    #     dot_code += "</tr>"
+
+    #     return dot_code
+    
     def __iter__(self):
         self.actual = self.primero
         return self

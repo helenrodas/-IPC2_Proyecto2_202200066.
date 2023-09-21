@@ -257,7 +257,7 @@ class FrmInicio:
 
                     listaImstrucciones = listado_mensajes.encontrar_sistema(sistema)
                     
-                    self.mostrar_instrucciones(listaImstrucciones)
+                    self.mostrar_instrucciones(listaImstrucciones,sistema)
                 
         tvMensajes.bind('<<TreeviewSelect>>',item_selected)
         
@@ -267,7 +267,7 @@ class FrmInicio:
         tablaMensajes_frame.pack(pady=20)
     
     
-    def mostrar_instrucciones(self, listaInstrucciones):
+    def mostrar_instrucciones(self, listaInstrucciones,sistema):
         tablaMensajes_frame = tk.Frame(self.main_frame)
         tvInstrucciones = ttk.Treeview(tablaMensajes_frame, columns=( "Valor", "Mensaje", "Tiempo"))
         
@@ -282,14 +282,22 @@ class FrmInicio:
         tvInstrucciones.heading("Tiempo", text="Tiempo", anchor=tk.CENTER)
         
         lb = tk.Label(tablaMensajes_frame, text="Instrucciones", font=('Bold', 20))
-        for instruccion in listaInstrucciones:
-            tvInstrucciones.insert("", "end", text=instruccion.CInstrucciones.dron_actual, values=(instruccion.CInstrucciones.posicion, "valora", "valorB"))
+        listado_sistemasDrones = self.readFile.get_listaSistemasDrones()
+        listado_contenido = listado_sistemasDrones.encontrar_listaContenido(sistema)
         
+        for instruccion in listaInstrucciones:
+            dron_temp = instruccion.CInstrucciones.dron_actual
+            lista_alturas = listado_contenido.get_listaAlturas(dron_temp)
+            altura_temp = instruccion.CInstrucciones.posicion
+
+            letra_temp = lista_alturas.encontrar_letra(altura_temp)
+
+            tvInstrucciones.insert("", "end", text=instruccion.CInstrucciones.dron_actual, values=(instruccion.CInstrucciones.posicion, letra_temp, "valorB"))
+    
         lb.pack()
         tvInstrucciones.pack()
         tvInstrucciones.pack(side="left")
         tablaMensajes_frame.pack(pady=20)
-    
     
     
     def clear_page(self):
