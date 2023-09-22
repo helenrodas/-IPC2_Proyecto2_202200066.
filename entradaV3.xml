@@ -52,13 +52,13 @@
          <alturaMaxima>1</alturaMaxima>
          <cantidadDrones>4</cantidadDrones>
          <contenido>
-            <dron>DronX</dron>
+            <dron>DronW</dron>
             <alturas>
                <altura valor="1">I</altura>
             </alturas>
          </contenido>
          <contenido>
-            <dron>DronW</dron>
+            <dron>DronX</dron>
             <alturas>
                <altura valor="1">P</altura>
             </alturas>

@@ -13,6 +13,8 @@ class FrmInicio:
         self.file_path = None
         self.readFile = readFile()
         self.nuevoDron = StringVar()
+        self.tiempoTemp = 1
+        self.cadenaTiempo = ""
         
 
         # Menu con opciones
@@ -43,7 +45,7 @@ class FrmInicio:
         self.gestionDrones_indicate.place(x=3,y=210,width=5,height=30)
         self.gestionDrones_btn.bind("<Button-1>", self.gestion_drones_menu)
 
-        self.gestionSistemasDrones_btn = tk.Button(self.options_frame,text='Gestion Sistemas',font=('Bold',12),fg='black',bd=0,bg='lightblue',width=14,height=1)
+        self.gestionSistemasDrones_btn = tk.Button(self.options_frame,text='Gestion Sistemas',font=('Bold',12),fg='black',bd=0,bg='lightblue',width=14,height=1,command = self.graficar_lista_drones)
         self.gestionSistemasDrones_btn.place(x=8,y=270)
         self.gestionSistemasDrones_indicate = tk.Label(self.options_frame,text='',bg='#158aff')
         self.gestionSistemasDrones_indicate.place(x=3,y=270,width=5,height=30)
@@ -261,10 +263,14 @@ class FrmInicio:
                 
         tvMensajes.bind('<<TreeviewSelect>>',item_selected)
         
+        
         lb.pack()
-        tvMensajes.pack()
-        tvMensajes.pack(side="left") 
+        tvMensajes.pack(pady=(10, 0))  # Ajusta pady
         tablaMensajes_frame.pack(pady=20)
+        # lb.pack()
+        # tvMensajes.pack()
+        # tvMensajes.pack(side="left") 
+        # tablaMensajes_frame.pack(pady=20)
     
     
     def mostrar_instrucciones(self, listaInstrucciones,sistema):
@@ -281,24 +287,84 @@ class FrmInicio:
         tvInstrucciones.heading("Mensaje", text="Mensaje", anchor=tk.CENTER)
         tvInstrucciones.heading("Tiempo", text="Tiempo", anchor=tk.CENTER)
         
-        lb = tk.Label(tablaMensajes_frame, text="Instrucciones", font=('Bold', 20))
+        lb = tk.Label(tablaMensajes_frame, text="Instrucciones", font=('Bold', 16))
         listado_sistemasDrones = self.readFile.get_listaSistemasDrones()
         listado_contenido = listado_sistemasDrones.encontrar_listaContenido(sistema)
         
+        mensaje_completo = ""
         for instruccion in listaInstrucciones:
             dron_temp = instruccion.CInstrucciones.dron_actual
             lista_alturas = listado_contenido.get_listaAlturas(dron_temp)
             altura_temp = instruccion.CInstrucciones.posicion
 
             letra_temp = lista_alturas.encontrar_letra(altura_temp)
+            mensaje_completo += letra_temp
+            self.calcular_tiempo(int(altura_temp),dron_temp)
 
             tvInstrucciones.insert("", "end", text=instruccion.CInstrucciones.dron_actual, values=(instruccion.CInstrucciones.posicion, letra_temp, "valorB"))
     
+        lbMensaje = tk.Label(tablaMensajes_frame, text="Mensaje decifrado: " + mensaje_completo, font=('Bold', 12))
+        
+        # lb.grid(row=1, column=0, pady=10)
+        # tvInstrucciones.grid(row=0, column=0, padx=10, pady=(1, 0))  # Ajusta pady
+        # lbMensaje.grid(row=2, column=0, pady=1)   
+        # tablaMensajes_frame.pack(pady=20)
+        
+        
         lb.pack()
         tvInstrucciones.pack()
         tvInstrucciones.pack(side="left")
+        lbMensaje.pack()
         tablaMensajes_frame.pack(pady=20)
+        
+    def calcular_tiempo(self, alturaTemp, dron_temp):
+        if alturaTemp >= self.tiempoTemp:
+            self.tiempoTemp += 1
+            print("El dron: " + dron_temp + " subio")
+        elif str(self.tiempoTemp) in self.cadenaTiempo:
+            self.tiempoTemp += 1
+            print("Esperar, tiempo encontrado")
+        else: 
+            # self.tiempoTemp = alturaTemp + 1
+            self.tiempoTemp += 1
+            print("El dron: " + dron_temp + " bajo")
+
+        tiempo_original = self.tiempoTemp
+
+        tiempoAsString = str(self.tiempoTemp)
+        self.cadenaTiempo += tiempoAsString
+
+        # if self.tiempoTemp != tiempo_original:
+        #     print("Tiempo Encontrado")
+
+        print("Enciende luz: " + tiempoAsString)
+        print("Tiempo optimo: " + str(self.tiempoTemp))
     
+    # def calcular_tiempo(self,alturaTemp,dron_temp):
+        
+    #     if alturaTemp >= self.tiempoTemp:
+    #         self.tiempoTemp = alturaTemp + 1
+    #         tiempoAsString = str(self.tiempoTemp)
+            
+    #         self.cadenaTiempo += tiempoAsString
+    #         if self.cadenaTiempo.find(tiempoAsString):
+    #             print("tiempo Encontrado")
+                
+    #         print("El dron: " + dron_temp + " subio")
+    #         print("Tiempo de accion: " + tiempoAsString)
+    #     else:
+    #         tiempo = alturaTemp + 1
+    #         self.tiempoTemp = tiempo
+    #         tiempoAsString = str(self.tiempoTemp)
+    #         if self.cadenaTiempo.find(tiempoAsString):
+    #             print("tiempo Encontrado")
+    #         print("El dron:" + dron_temp + "bajo")
+            
+    #     print("Tiempo Optimo: " + str(self.tiempoTemp))
+    
+    
+    def graficar_lista_drones(self):
+        self.readFile.graficar()
     
     def clear_page(self):
         for frame in self.main_frame.winfo_children():

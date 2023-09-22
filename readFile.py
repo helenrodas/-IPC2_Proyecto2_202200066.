@@ -42,6 +42,8 @@ class readFile():
                         lista_cantidad_drones = sistemas.findall('cantidadDrones')
                         for nodo_cantidad_drones in lista_cantidad_drones:
                             cantidad_drones = nodo_cantidad_drones.text
+                        count = 1
+                        lista_alturas_sistema_temp = listaAlturas()
                         lista_contenido = sistemas.findall('contenido')
                         self.lista_contenido_temp = listaContenido()
                         for nodo_contenido in lista_contenido:
@@ -55,9 +57,13 @@ class readFile():
                                 for nodo_altura in lista_altura:
                                     altura = nodo_altura.get('valor')
                                     letra = nodo_altura.text
-                                    self.lista_alturas_temp.insertar(CAlturas(altura,letra))
+                                    self.lista_alturas_temp.insertar(CAlturas(altura,letra,count))
+                                    lista_alturas_sistema_temp.insertar_alturas(CAlturas(altura,letra,count))
+                                
+                            count +=1
                             self.lista_contenido_temp.insertar(CContenido(dron,self.lista_alturas_temp))
-                        self.lista_sistemas_temp.insertar(CSistemasDrones(nombre_sistema,altura_max,cantidad_drones,self.lista_contenido_temp))
+                        self.lista_sistemas_temp.insertar(CSistemasDrones(nombre_sistema,altura_max,cantidad_drones,self.lista_contenido_temp,lista_alturas_sistema_temp))
+                        lista_alturas_sistema_temp.imprimir()
                     self.lista_sistemas_temp.imprimir()
 
                 print("*************Mensajes*************")
@@ -92,6 +98,9 @@ class readFile():
     
     def get_listaMensajes(self):
         return self.lista_mensajes_temp
+    
+    def graficar(self):
+        self.lista_sistemas_temp.recorrer_grafica()
 
     # def get_listaContenido(self):
     #     return self.lista_contenido_temp

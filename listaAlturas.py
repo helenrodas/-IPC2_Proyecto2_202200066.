@@ -19,6 +19,28 @@ class listaAlturas:
             actual=actual.siguiente
         actual.siguiente=nodoAlturas(CAlturas)
 
+    def insertar_alturas(self, CAlturas):
+        nuevo_nodo = nodoAlturas(CAlturas)
+
+        if self.Count == 0:
+            self.primero = nuevo_nodo
+            self.ultimo = nuevo_nodo
+        else:
+            actual = self.primero
+            anterior = None
+            while actual is not None and (int(actual.CAlturas.altura) < int(nuevo_nodo.CAlturas.altura) or (int(actual.CAlturas.altura) == int(nuevo_nodo.CAlturas.altura) and int(actual.CAlturas.contador) < int(nuevo_nodo.CAlturas.contador))):
+                anterior = actual
+                actual = actual.siguiente
+            if anterior is None:
+                nuevo_nodo.siguiente = self.primero
+                self.primero = nuevo_nodo
+            else:
+                nuevo_nodo.siguiente = actual
+                anterior.siguiente = nuevo_nodo
+
+        self.Count += 1
+
+
     def imprimir(self):
         print("")
         actual=self.primero
@@ -36,6 +58,36 @@ class listaAlturas:
                 return actual.CAlturas.letra
             actual = actual.siguiente
     
+    def generar_dot(self):
+
+
+        dot_code = f"""<tr><td border="0"></td>"""
+        
+        
+        actual =self.primero
+        sentinela_de_filas=actual.CAlturas.altura 
+        fila_iniciada=False
+        while actual != None:
+
+            if int(sentinela_de_filas)!=int(actual.CAlturas.altura) :
+                dot_code += f"""</tr><tr><td border="0"></td>"""
+                sentinela_de_filas=actual.CAlturas.altura 
+                fila_iniciada=False
+
+                
+            if fila_iniciada==False:
+                fila_iniciada=True
+
+                
+                dot_code+="""<td>"""+str(actual.CAlturas.letra)+"""</td>\n"""
+            else:
+                dot_code+="""<td>"""+str(actual.CAlturas.letra)+"""</td>\n"""
+            actual = actual.siguiente
+
+        dot_code += f"""</tr>"""
+
+
+        return dot_code
     
     def __iter__(self):
         self.actual = self.primero

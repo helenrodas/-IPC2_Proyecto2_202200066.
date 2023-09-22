@@ -1,6 +1,7 @@
 from nodoSistemasDrones import nodoSistemasDrones
 from CSistemasDrones import CSistemasDrones
 from listaContenido import listaContenido
+import os
 
 class listaSistemasDrones:
     def __init__(self):
@@ -36,45 +37,43 @@ class listaSistemasDrones:
                 return actual.CSistemasDrones.listaContenido
             actual = actual.siguiente
     
-    
-    
-    # def generar_dot(self):
-    #     dot_code = """
+    def generar_dot(self):
+        dot_code = """
         
-    #         <tr>
-    #             <td>Nombre de sistema</td>
-    #         </tr>
-    #     """
+            <tr>
+                <td>Nombre de sistema</td>
+            </tr>
+        """
 
-    #     aux = self.primero
-    #     while aux:
-    #         dot_code += f"""
-    #             <tr>
-    #                 <td>{aux.CSistemasDrones.nombre_sistema}</td>
-    #             </tr>
-    #             """+aux.CSistemasDrones.listaContenido.generar_dot()+aux.CSistemasDrones.lista_nueva_altura.generar_dot()+"""
-    #         """
-    #         aux = aux.siguiente
+        aux = self.primero
+        while aux:
+            dot_code += f"""
+                <tr>
+                    <td>{aux.CSistemasDrones.nombre_sistema}</td>
+                </tr>
+                """+aux.CSistemasDrones.listaContenido.generar_dot()+aux.CSistemasDrones.listaAlturasSistema.generar_dot()+"""
+            """
+            aux = aux.siguiente
 
         
-    #     return dot_code
+        return dot_code
 
-    # def recorrer_grafica(self):
-    #     f = open('bb.dot','w')
+    def recorrer_grafica(self):
+        f = open('bb.dot','w')
 
-    #     dot_code = f"""
-    #     digraph G {{
-    #         node [shape=plaintext];
+        dot_code = f"""
+        digraph G {{
+            node [shape=plaintext];
 
-    #         tbl [label=<<table border="0" cellborder="1" cellspacing="0">{self.generar_dot()}</table>>];
-    #     }}
-    #     """
+            tbl [label=<<table border="0" cellborder="1" cellspacing="0">{self.generar_dot()}</table>>];
+        }}
+        """
 
-        # # Guarda el código en un archivo
-        # f.write(dot_code)
-        # f.close()
-        # os.environ["PATH"] += os.pathsep + 'C:/Program Files/Graphviz/bin'
-        # os.system(f"dot -Tpng bb.dot -o Sistema_Datos.png")
+        # Guarda el código en un archivo
+        f.write(dot_code)
+        f.close()
+        os.environ["PATH"] += os.pathsep + 'C:/Program Files/Graphviz/bin'
+        os.system(f"dot -Tpng bb.dot -o Sistema.png")
     
     def __iter__(self):
         self.actual = self.primero

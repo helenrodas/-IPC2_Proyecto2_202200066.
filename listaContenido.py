@@ -33,41 +33,41 @@ class listaContenido:
             actual = actual.siguiente
     
     
-    # def generar_dot(self):
-    #     dot_code = """
+    def generar_dot(self):
+        dot_code = """
         
-    #         <tr>
-    #             <td>Nombre Dron</td>
+            <tr>
+                <td>Nombre Dron</td>
                 
             
-    #     """
+        """
 
-    #     aux = self.primero
-    #     while aux:
-    #         dot_code += f"""
+        aux = self.primero
+        while aux:
+            dot_code += f"""
                 
                     
-    #                 <td>{aux.CContenido.dron}</td>
+                    <td>{aux.CContenido.dron}</td>
                     
 
-    #         """
-    #         aux = aux.siguiente
-    #     dot_code += f"""
-    #     </tr>
-    #     """
+            """
+            aux = aux.siguiente
+        dot_code += f"""
+        </tr>
+        """
 
-    #     actual1 = self.primero
-    #     dot_code += """<tr><td border="0"></td>"""
-    #     while actual1:
-    #         dot_code += """
+        actual1 = self.primero
+        dot_code += """<tr><td border="0"></td>"""
+        while actual1:
+            dot_code += """
         
             
-    #             <td>Letra Dron</td>
-    #         """   
-    #         actual1 = actual1.siguiente
-    #     dot_code += "</tr>"
+                <td>Letra Dron</td>
+            """   
+            actual1 = actual1.siguiente
+        dot_code += "</tr>"
 
-    #     return dot_code
+        return dot_code
     
     def __iter__(self):
         self.actual = self.primero
