@@ -37,7 +37,7 @@ class listaContenido:
         dot_code = """
         
             <tr>
-                <td>Nombre Dron</td>
+                <td>Dron</td>
                 
             
         """
@@ -62,12 +62,18 @@ class listaContenido:
             dot_code += """
         
             
-                <td>Letra Dron</td>
             """   
             actual1 = actual1.siguiente
         dot_code += "</tr>"
 
         return dot_code
+    
+    def eliminar_datos(self):
+        while self.primero:
+            actual = self.primero
+            self.primero = self.primero.siguiente
+            del actual
+    
     
     def __iter__(self):
         self.actual = self.primero

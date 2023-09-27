@@ -40,9 +40,6 @@ class listaSistemasDrones:
     def generar_dot(self):
         dot_code = """
         
-            <tr>
-                <td>Nombre de sistema</td>
-            </tr>
         """
 
         aux = self.primero
@@ -63,17 +60,22 @@ class listaSistemasDrones:
 
         dot_code = f"""
         digraph G {{
-            node [shape=plaintext];
-
+            node [shape=box];
             tbl [label=<<table border="0" cellborder="1" cellspacing="0">{self.generar_dot()}</table>>];
         }}
         """
 
-        # Guarda el código en un archivo
         f.write(dot_code)
         f.close()
         os.environ["PATH"] += os.pathsep + 'C:/Program Files/Graphviz/bin'
         os.system(f"dot -Tpng bb.dot -o Sistema.png")
+    
+    def eliminar_datos(self):
+        while self.primero:
+            actual = self.primero
+            self.primero = self.primero.siguiente
+            del actual
+    
     
     def __iter__(self):
         self.actual = self.primero

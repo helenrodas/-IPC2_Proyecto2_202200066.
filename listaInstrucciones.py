@@ -24,6 +24,12 @@ class listaInstrucciones:
             actual=actual.siguiente
         print("---------------------------------------------------------")
     
+    def eliminar_datos(self):
+        while self.primero:
+            actual = self.primero
+            self.primero = self.primero.siguiente
+            del actual
+    
     def __iter__(self):
         self.actual = self.primero
         return self

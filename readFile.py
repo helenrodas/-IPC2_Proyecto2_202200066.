@@ -90,6 +90,10 @@ class readFile():
         except Exception as err:
             print("Error:", err)
     
+    def borrarListas(self):
+        self.lista_sistemas_temp.eliminar_datos()
+        self.lista_drones_temp.eliminar_datos()
+    
     def get_listaDrones(self):
         return self.lista_drones_temp
     

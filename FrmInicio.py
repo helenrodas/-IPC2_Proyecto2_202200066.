@@ -13,9 +13,10 @@ class FrmInicio:
         self.file_path = None
         self.readFile = readFile()
         self.nuevoDron = StringVar()
-        self.tiempoTemp = 1
+        self.tiempoTemp = 0
         self.cadenaTiempo = ""
-        
+        self.existeTabla = False
+        self.tablaTemp = ""
 
         # Menu con opciones
         self.options_frame = tk.Frame(root,bg='lightblue')
@@ -24,7 +25,7 @@ class FrmInicio:
         self.options_frame.configure(width=150,height=500)
 
         #Opciones
-        self.inicializacion_btn = tk.Button(self.options_frame,text='Inicializacion',font=('Bold',12),fg='black',bd=0,bg='lightblue',width=14,height=1)
+        self.inicializacion_btn = tk.Button(self.options_frame,text='Inicializacion',font=('Bold',12),fg='black',bd=0,bg='lightblue',width=14,height=1, command=self.inicializar)
         self.inicializacion_btn.place(x=8,y=30)
         self.inicializacion_indicate = tk.Label(self.options_frame,text='',bg='#158aff')
         self.inicializacion_indicate.place(x=3,y=30,width=5,height=30)
@@ -213,11 +214,23 @@ class FrmInicio:
     def crear_tabla_listaInstrucciones(self,listaInstrucciones):
         
         listaMensajes_frame = tk.Frame(self.main_frame)
+        
+        # if self.existeTabla == True:
+        #     # print("Entro")
+        #     listaMensajes_frame.destroy()
+        #     listaMensajes_frame = tk.Frame(self.main_frame)
+        # else:
+        #     pass
+        
         tvInstrucciones = ttk.Treeview(listaMensajes_frame,columns=("colInstrucciones"))
-        tvInstrucciones.delete(*tvInstrucciones.get_children())
-        tvInstrucciones.delete(*tvInstrucciones.get_children())
+        self.tablaTemp = tvInstrucciones
+        
+        
+        # tvInstrucciones.delete(*tvInstrucciones.get_children())
+        # tvInstrucciones.delete(*tvInstrucciones.get_children())
         tvInstrucciones.column("#0",width=90)
         tvInstrucciones.column("colInstrucciones",width=90,anchor=CENTER)
+        self.existeTabla = True
         
         tvInstrucciones.heading("#0",text="Dron",anchor=CENTER)
         tvInstrucciones.heading("colInstrucciones", text="Valor", anchor=CENTER)
@@ -305,11 +318,6 @@ class FrmInicio:
     
         lbMensaje = tk.Label(tablaMensajes_frame, text="Mensaje decifrado: " + mensaje_completo, font=('Bold', 12))
         
-        # lb.grid(row=1, column=0, pady=10)
-        # tvInstrucciones.grid(row=0, column=0, padx=10, pady=(1, 0))  # Ajusta pady
-        # lbMensaje.grid(row=2, column=0, pady=1)   
-        # tablaMensajes_frame.pack(pady=20)
-        
         
         lb.pack()
         tvInstrucciones.pack()
@@ -317,14 +325,49 @@ class FrmInicio:
         lbMensaje.pack()
         tablaMensajes_frame.pack(pady=20)
         
+        
+    # def calcular_tiempo(self, alturaTemp, dron_temp):
+    #     while self.tiempoTemp < alturaTemp:
+    #         print(dron_temp + " subió")
+    #         self.tiempoTemp += 1
+    #     while self.tiempoTemp > alturaTemp:
+    #         print(dron_temp + " bajó")
+    #         self.tiempoTemp -= 1
+    #     print(dron_temp + " emitio Luz")
+        
+    #     # Agregar un bucle de espera hasta que el dron alcance su objetivo
+    #     while self.tiempoTemp == alturaTemp:
+    #         print(dron_temp + " esperando")
+
+
+        
+    # def calcular_tiempo(self,alturaTemp,dron_temp):
+    #     isOff = True
+    #     self.tiempoTemp =+1
+        
+    #     if alturaTemp >= self.tiempoTemp:
+    #         self.tiempoTemp += 1
+    #         print("El dron: " + dron_temp + " subio")
+    #     elif str(self.tiempoTemp) in self.cadenaTiempo:
+    #         self.tiempoTemp += 1
+    #         print("Esperar")
+    #     else: 
+    #         self.tiempoTemp = alturaTemp + 1
+    #         self.tiempoTemp += 1
+    #         print("El dron: " + dron_temp + " bajo")
+        
+    #     print("L" + str(alturaTemp))
+        
+    
     def calcular_tiempo(self, alturaTemp, dron_temp):
         if alturaTemp >= self.tiempoTemp:
-            self.tiempoTemp += 1
+            self.tiempoTemp = alturaTemp + 1
             print("El dron: " + dron_temp + " subio")
-        elif str(self.tiempoTemp) in self.cadenaTiempo:
+            
+        elif alturaTemp <= self.tiempoTemp:
             self.tiempoTemp += 1
             print("Esperar, tiempo encontrado")
-        else: 
+        elif str(self.tiempoTemp) in self.cadenaTiempo: 
             # self.tiempoTemp = alturaTemp + 1
             self.tiempoTemp += 1
             print("El dron: " + dron_temp + " bajo")
@@ -337,34 +380,18 @@ class FrmInicio:
         # if self.tiempoTemp != tiempo_original:
         #     print("Tiempo Encontrado")
 
-        print("Enciende luz: " + tiempoAsString)
+        print("El dron: " + dron_temp, "enciende luz: " + tiempoAsString)
         print("Tiempo optimo: " + str(self.tiempoTemp))
     
-    # def calcular_tiempo(self,alturaTemp,dron_temp):
-        
-    #     if alturaTemp >= self.tiempoTemp:
-    #         self.tiempoTemp = alturaTemp + 1
-    #         tiempoAsString = str(self.tiempoTemp)
-            
-    #         self.cadenaTiempo += tiempoAsString
-    #         if self.cadenaTiempo.find(tiempoAsString):
-    #             print("tiempo Encontrado")
-                
-    #         print("El dron: " + dron_temp + " subio")
-    #         print("Tiempo de accion: " + tiempoAsString)
-    #     else:
-    #         tiempo = alturaTemp + 1
-    #         self.tiempoTemp = tiempo
-    #         tiempoAsString = str(self.tiempoTemp)
-    #         if self.cadenaTiempo.find(tiempoAsString):
-    #             print("tiempo Encontrado")
-    #         print("El dron:" + dron_temp + "bajo")
-            
-    #     print("Tiempo Optimo: " + str(self.tiempoTemp))
+    
+    def inicializar(self):
+        self.readFile.borrarListas()
+        messagebox.showinfo("Inicializar", "Se reinicio el programa correctamente")
     
     
     def graficar_lista_drones(self):
         self.readFile.graficar()
+        messagebox.showinfo("Grafica", "Grafica creada")
     
     def clear_page(self):
         for frame in self.main_frame.winfo_children():
@@ -394,6 +421,9 @@ class FrmInicio:
         link.pack()
         ayuda_frame.pack(pady=20)
 
+    def reiniciar_tabla(self,table):
+        for item in table.get_children():
+            table.delete(item)
 
 if __name__ == "__main__":
     root = tk.Tk()
