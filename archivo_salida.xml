@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<respuesta>
+    <listaMensajes>
+        <mensaje nombre="msg">
+            <sistemaDrones>
+                <tiempoOptimo>6</tiempoOptimo>
+                <mensajeRecibido>IPC2</mensajeRecibido>
+                <instrucciones />
+        </sistemaDrones>
+        </mensaje>
+        <mensaje nombre="msg2">
+            <sistemaDrones>
+                <tiempoOptimo>5</tiempoOptimo>
+                <mensajeRecibido>IPC2</mensajeRecibido>
+                <instrucciones />
+            </sistemaDrones>
+        </mensaje>
+    </listaMensajes>
+</respuesta>

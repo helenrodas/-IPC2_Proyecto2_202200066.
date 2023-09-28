@@ -3,6 +3,120 @@
             node [shape=box];
             tbl [label=<<table border="0" cellborder="1" cellspacing="0">
         
-        </table>>];
+        
+                <tr>
+                    <td>SD1</td>
+                </tr>
+                
+        
+            <tr>
+                <td>Dron</td>
+                
+            
+        
+                
+                    
+                    <td>DronX</td>
+                    
+
+            
+                
+                    
+                    <td>DronY</td>
+                    
+
+            
+                
+                    
+                    <td>DronZ</td>
+                    
+
+            
+        </tr>
+        <tr><td border="0"></td>
+        
+            
+            
+        
+            
+            
+        
+            
+            </tr><tr><td border="0"></td><td>A</td>
+<td>2</td>
+<td>B</td>
+</tr><tr><td border="0"></td><td>I</td>
+<td>C</td>
+<td>C</td>
+</tr><tr><td border="0"></td><td>D</td>
+<td>P</td>
+<td>E</td>
+</tr><tr><td border="0"></td><td>F</td>
+<td>G</td>
+<td>H</td>
+</tr><tr><td border="0"></td><td>I</td>
+<td>L</td>
+<td>O</td>
+</tr><tr><td border="0"></td><td>J</td>
+<td>M</td>
+<td>P</td>
+</tr><tr><td border="0"></td><td>K</td>
+<td>N</td>
+<td>Q</td>
+</tr>
+            
+                <tr>
+                    <td>SDF</td>
+                </tr>
+                
+        
+            <tr>
+                <td>Dron</td>
+                
+            
+        
+                
+                    
+                    <td>DronW</td>
+                    
+
+            
+                
+                    
+                    <td>DronX</td>
+                    
+
+            
+                
+                    
+                    <td>DronY</td>
+                    
+
+            
+                
+                    
+                    <td>DronZ</td>
+                    
+
+            
+        </tr>
+        <tr><td border="0"></td>
+        
+            
+            
+        
+            
+            
+        
+            
+            
+        
+            
+            </tr><tr><td border="0"></td><td>I</td>
+<td>P</td>
+<td>C</td>
+<td>2</td>
+</tr>
+            </table>>];
         }
         

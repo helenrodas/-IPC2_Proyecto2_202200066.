@@ -1,5 +1,6 @@
 from nodoMensajes import nodoMensajes
 from CMensajes import CMensajes
+import xml.etree.ElementTree as ET
 
 class listaMensajes:
     def __init__(self):
@@ -51,6 +52,7 @@ class listaMensajes:
             actual = self.primero
             self.primero = self.primero.siguiente
             del actual
+    
     
     def __iter__(self):
         self.actual = self.primero

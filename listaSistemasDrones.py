@@ -3,6 +3,7 @@ from CSistemasDrones import CSistemasDrones
 from listaContenido import listaContenido
 import os
 
+
 class listaSistemasDrones:
     def __init__(self):
         self.primero = None
@@ -75,6 +76,9 @@ class listaSistemasDrones:
             actual = self.primero
             self.primero = self.primero.siguiente
             del actual
+    
+    
+    
     
     
     def __iter__(self):

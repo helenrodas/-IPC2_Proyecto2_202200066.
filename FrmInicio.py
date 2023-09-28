@@ -4,6 +4,8 @@ from tkinter import filedialog, messagebox
 from tkinter import ttk
 from readFile import *
 from readFile import readFile
+from listaMensajeCreado import listaMensajeCreado
+from CMensajeCreado import CMensajeCreado
 
 class FrmInicio:
     
@@ -17,6 +19,7 @@ class FrmInicio:
         self.cadenaTiempo = ""
         self.existeTabla = False
         self.tablaTemp = ""
+        self.lista_mensajeCreado_temp = listaMensajeCreado()
 
         # Menu con opciones
         self.options_frame = tk.Frame(root,bg='lightblue')
@@ -35,7 +38,7 @@ class FrmInicio:
         self.cargarArchivo_indicate = tk.Label(self.options_frame,text='',bg='#158aff')
         self.cargarArchivo_indicate.place(x=3,y=90,width=5,height=30)
 
-        self.generarArchivo_btn = tk.Button(self.options_frame,text='Generar Archivo',font=('Bold',12),fg='black',bd=0,bg='lightblue',width=14,height=1)
+        self.generarArchivo_btn = tk.Button(self.options_frame,text='Generar Archivo',font=('Bold',12),fg='black',bd=0,bg='lightblue',width=14,height=1,command=self.crear_xml_salida)
         self.generarArchivo_btn.place(x=8,y=150)
         self.generarArchivo_indicate = tk.Label(self.options_frame,text='',bg='#158aff')
         self.generarArchivo_indicate.place(x=3,y=150,width=5,height=30)
@@ -265,6 +268,8 @@ class FrmInicio:
         def item_selected(event):
             for selected_item in tvMensajes.selection():
                 item = tvMensajes.item(selected_item)
+                # print(item)
+                nombreMensaje = item['text']
                 valuesList = item['values']
                 if valuesList:
                     sistema = valuesList[0]
@@ -272,7 +277,7 @@ class FrmInicio:
 
                     listaImstrucciones = listado_mensajes.encontrar_sistema(sistema)
                     
-                    self.mostrar_instrucciones(listaImstrucciones,sistema)
+                    self.mostrar_instrucciones(listaImstrucciones,sistema,nombreMensaje)
                 
         tvMensajes.bind('<<TreeviewSelect>>',item_selected)
         
@@ -286,7 +291,8 @@ class FrmInicio:
         # tablaMensajes_frame.pack(pady=20)
     
     
-    def mostrar_instrucciones(self, listaInstrucciones,sistema):
+    def mostrar_instrucciones(self, listaInstrucciones,sistema,nombreMensaje):
+        self.tiempoTemp = 0
         tablaMensajes_frame = tk.Frame(self.main_frame)
         tvInstrucciones = ttk.Treeview(tablaMensajes_frame, columns=( "Valor", "Mensaje", "Tiempo"))
         
@@ -312,17 +318,21 @@ class FrmInicio:
 
             letra_temp = lista_alturas.encontrar_letra(altura_temp)
             mensaje_completo += letra_temp
-            self.calcular_tiempo(int(altura_temp),dron_temp)
+            tiempoOptimo = self.calcular_tiempo(int(altura_temp),dron_temp)
 
-            tvInstrucciones.insert("", "end", text=instruccion.CInstrucciones.dron_actual, values=(instruccion.CInstrucciones.posicion, letra_temp, "valorB"))
+
+            tvInstrucciones.insert("", "end", text=instruccion.CInstrucciones.dron_actual, values=(instruccion.CInstrucciones.posicion, letra_temp, tiempoOptimo))
     
+        self.lista_mensajeCreado_temp.insertar(CMensajeCreado(nombreMensaje,sistema,mensaje_completo,tiempoOptimo))
         lbMensaje = tk.Label(tablaMensajes_frame, text="Mensaje decifrado: " + mensaje_completo, font=('Bold', 12))
-        
+        lbTiempoOptimo = tk.Label(tablaMensajes_frame, text="Tiempo Optimo: " + str(tiempoOptimo), font=('Bold', 12))
+        # self.lista_mensajeCreado_temp.imprimir()
         
         lb.pack()
         tvInstrucciones.pack()
         tvInstrucciones.pack(side="left")
         lbMensaje.pack()
+        lbTiempoOptimo.pack()
         tablaMensajes_frame.pack(pady=20)
         
         
@@ -362,15 +372,15 @@ class FrmInicio:
     def calcular_tiempo(self, alturaTemp, dron_temp):
         if alturaTemp >= self.tiempoTemp:
             self.tiempoTemp = alturaTemp + 1
-            print("El dron: " + dron_temp + " subio")
+            # print("El dron: " + dron_temp + " subio")
             
         elif alturaTemp <= self.tiempoTemp:
             self.tiempoTemp += 1
-            print("Esperar, tiempo encontrado")
+            # print("Esperar, tiempo encontrado")
         elif str(self.tiempoTemp) in self.cadenaTiempo: 
             # self.tiempoTemp = alturaTemp + 1
             self.tiempoTemp += 1
-            print("El dron: " + dron_temp + " bajo")
+            # print("El dron: " + dron_temp + " bajo")
 
         tiempo_original = self.tiempoTemp
 
@@ -380,14 +390,18 @@ class FrmInicio:
         # if self.tiempoTemp != tiempo_original:
         #     print("Tiempo Encontrado")
 
-        print("El dron: " + dron_temp, "enciende luz: " + tiempoAsString)
-        print("Tiempo optimo: " + str(self.tiempoTemp))
+        # print("El dron: " + dron_temp, "enciende luz: " + tiempoAsString)
+        # print("Tiempo optimo: " + str(self.tiempoTemp))
+        return self.tiempoTemp
     
     
     def inicializar(self):
         self.readFile.borrarListas()
         messagebox.showinfo("Inicializar", "Se reinicio el programa correctamente")
     
+    def crear_xml_salida(self):
+        self.lista_mensajeCreado_temp.generar_xml(self.lista_mensajeCreado_temp)
+        messagebox.showinfo("xml salida", "Se genero archivo xml")
     
     def graficar_lista_drones(self):
         self.readFile.graficar()
