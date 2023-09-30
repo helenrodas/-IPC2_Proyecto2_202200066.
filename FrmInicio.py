@@ -19,6 +19,7 @@ class FrmInicio:
         self.cadenaTiempo = ""
         self.existeTabla = False
         self.tablaTemp = ""
+        self.ultimaAltura=0
         self.lista_mensajeCreado_temp = listaMensajeCreado()
 
         # Menu con opciones
@@ -318,8 +319,9 @@ class FrmInicio:
 
             letra_temp = lista_alturas.encontrar_letra(altura_temp)
             mensaje_completo += letra_temp
+            # self.tiempoTemp=0
             tiempoOptimo = self.calcular_tiempo(int(altura_temp),dron_temp)
-
+            
 
             tvInstrucciones.insert("", "end", text=instruccion.CInstrucciones.dron_actual, values=(instruccion.CInstrucciones.posicion, letra_temp, tiempoOptimo))
     
@@ -372,15 +374,15 @@ class FrmInicio:
     def calcular_tiempo(self, alturaTemp, dron_temp):
         if alturaTemp >= self.tiempoTemp:
             self.tiempoTemp = alturaTemp + 1
-            # print("El dron: " + dron_temp + " subio")
+            print("El dron: " + dron_temp + " subio")
             
         elif alturaTemp <= self.tiempoTemp:
             self.tiempoTemp += 1
-            # print("Esperar, tiempo encontrado")
+            print("Esperar, tiempo encontrado")
         elif str(self.tiempoTemp) in self.cadenaTiempo: 
             # self.tiempoTemp = alturaTemp + 1
             self.tiempoTemp += 1
-            # print("El dron: " + dron_temp + " bajo")
+            print("El dron: " + dron_temp + " bajo")
 
         tiempo_original = self.tiempoTemp
 
@@ -390,9 +392,40 @@ class FrmInicio:
         # if self.tiempoTemp != tiempo_original:
         #     print("Tiempo Encontrado")
 
-        # print("El dron: " + dron_temp, "enciende luz: " + tiempoAsString)
-        # print("Tiempo optimo: " + str(self.tiempoTemp))
+        print("El dron: " + dron_temp, "enciende luz: " + tiempoAsString)
+        print("Tiempo optimo: " + str(self.tiempoTemp))
         return self.tiempoTemp
+    
+    # def calcular_tiempo(self, alturaTemp, dron_temp):
+    #     self.tiempoTemp = 0
+        
+        
+        
+    #     while self.tiempoTemp < alturaTemp:
+    #         self.tiempoTemp += 1
+    #         print("El dron: " + dron_temp, "sube")
+
+        
+
+    #     if self.tiempoTemp == alturaTemp:
+    #         self.tiempoTemp += 1
+    #         if str(self.tiempoTemp) in self.cadenaTiempo:
+    #             while str(self.tiempoTemp) in self.cadenaTiempo:
+    #                 self.tiempoTemp += 1
+    #                 print("El dron: " + dron_temp, "esperando")
+            
+    #         print("El dron: " + dron_temp, "emite luz en:", self.tiempoTemp)
+    #         tiempoAsString = str(self.tiempoTemp)
+    #         self.cadenaTiempo += tiempoAsString
+    #         self.ultimaAltura = self.tiempoTemp
+
+    #     # while str(self.tiempoTemp) in self.cadenaTiempo:
+    #     #     self.tiempoTemp += 1
+    #     #     print("El dron: " + dron_temp, "esperando")
+
+    #     return self.tiempoTemp
+
+
     
     
     def inicializar(self):

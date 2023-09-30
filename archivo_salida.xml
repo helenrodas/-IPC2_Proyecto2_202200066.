@@ -10,7 +10,7 @@
         </mensaje>
         <mensaje nombre="msg2">
             <sistemaDrones>
-                <tiempoOptimo>5</tiempoOptimo>
+                <tiempoOptimo>10</tiempoOptimo>
                 <mensajeRecibido>IPC2</mensajeRecibido>
                 <instrucciones />
             </sistemaDrones>
