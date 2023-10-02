@@ -59,14 +59,14 @@ class listaMensajeCreado:
 
             instrucciones = ET.SubElement(sistema, 'instrucciones')
 
-            # for i in range(1,int(msg_buscado.tiempo)+1):
-            #     tiempo = ET.SubElement(instrucciones, 'tiempo', valor=f"{i}")
-            #     acciones = ET.SubElement(tiempo, 'acciones')
-            #     for movi in msg_buscado.movimientos:
+            for i in range(1,int(mensaje_buscado.tiempoOptimo)+1):
+                tiempo = ET.SubElement(instrucciones, 'tiempo', valor=f"{i}")
+                acciones = ET.SubElement(tiempo, 'acciones')
+                for movimiento in mensaje_buscado.listaMovimientos:
 
-            #         if int(movi.tiempo) == i:
-            #             dron = ET.SubElement(acciones, 'dron', nombre=f"{movi.dron}")
-            #             dron.text = movi.movimiento
+                    if int(movimiento.CMovimientos.tiempo) == i:
+                        dron = ET.SubElement(acciones, 'dron', nombre=f"{movimiento.CMovimientos.dron}")
+                        dron.text = movimiento.CMovimientos.movimiento
             prueba = ET.tostring(data)
 
         self.prettify_xml(data)

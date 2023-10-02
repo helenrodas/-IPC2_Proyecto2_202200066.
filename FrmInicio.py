@@ -2,6 +2,7 @@ from tkinter import *
 import tkinter as tk
 from tkinter import filedialog, messagebox
 from tkinter import ttk
+import webbrowser
 from readFile import *
 from readFile import readFile
 from listaMensajeCreado import listaMensajeCreado
@@ -331,7 +332,7 @@ class FrmInicio:
 
             tvInstrucciones.insert("", "end", text=instruccion.CInstrucciones.dron_actual, values=(instruccion.CInstrucciones.posicion, letra_temp, tiempoOptimo))
     
-        self.lista_mensajeCreado_temp.insertar(CMensajeCreado(nombreMensaje,sistema,mensaje_completo,tiempoOptimo))
+        self.lista_mensajeCreado_temp.insertar(CMensajeCreado(nombreMensaje,sistema,mensaje_completo,tiempoOptimo,self.lista_movimientos_temp))
         lbMensaje = tk.Label(tablaMensajes_frame, text="Mensaje decifrado: " + mensaje_completo, font=('Bold', 12))
         lbTiempoOptimo = tk.Label(tablaMensajes_frame, text="Tiempo Optimo: " + str(tiempoOptimo), font=('Bold', 12))
         # self.lista_mensajeCreado_temp.imprimir()
@@ -539,11 +540,18 @@ class FrmInicio:
         ayuda_frame = tk.Frame(self.main_frame)
         lb = tk.Label(ayuda_frame,text="Ayuda\n",font=('Bold',20))
         lb2 = tk.Label(ayuda_frame,text="Nombre: Helen Janet Rodas Castro \n Carnet: 202200066 \n Curso:IPC 2 \n Seccion: D \n Semestre: 4to. Semestre\n",font=('italic',14))
-        link = tk.Label(ayuda_frame,text="Link: Pronto...",font=('italic',14))
+        link = tk.Button(ayuda_frame,text="Link: Documentacion",font=('italic',14),command=self.abrir_enlace)
+        link.configure(bg=ayuda_frame.cget('bg'), fg="blue", relief=tk.FLAT, font=("Arial", 12, "underline"))
         lb.pack()
         lb2.pack()
         link.pack()
         ayuda_frame.pack(pady=20)
+
+
+    def abrir_enlace(self):
+        pdf_path = "P:/Programacion/PracticasPython/Proyecto2IPC2/Documentacion/documentacionProyecto2.pdf"
+        webbrowser.open_new(pdf_path)
+
 
     def reiniciar_tabla(self,table):
         for item in table.get_children():
