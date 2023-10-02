@@ -26,6 +26,16 @@ class listaMovimientos:
                 ultima_altura = actual.CMovimientos.altura
             actual = actual.siguiente
         return ultima_altura
+
+    def get_tiempoDron(self,dron):
+        actual = self.primero
+        ultima_altura = 0
+        while actual!= None:
+            if dron == actual.CMovimientos.dron:
+                # return print("Altura encontrada")
+                ultima_altura = actual.CMovimientos.tiempo
+            actual = actual.siguiente
+        return ultima_altura
     
     def existe_dron(self,dron):
         actual = self.primero

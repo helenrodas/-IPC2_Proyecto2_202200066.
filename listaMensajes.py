@@ -6,6 +6,7 @@ class listaMensajes:
     def __init__(self):
         self.primero = None
         self.ultimo = None
+        self.contador = 0
         
     # def insertar(self,CMensajes):
     #     if self.primero is None:
@@ -16,18 +17,43 @@ class listaMensajes:
     #         actual=actual.siguiente
     #     actual.siguiente=nodoMensajes(CMensajes)
         
-    def insertar(self,CMensajes):
-        nuevo_nodo = nodoMensajes(CMensajes)
+    # def insertar(self,CMensajes):
+    #     nuevo_nodo = nodoMensajes(CMensajes)
         
-        if self.primero is None or CMensajes.nombre_mensaje < self.primero.CMensajes.nombre_mensaje:
-            nuevo_nodo.siguiente = self.primero
-            self.primero=nuevo_nodo
-            return
-        actual=self.primero
-        while actual.siguiente and actual.siguiente.CMensajes.nombre_mensaje < CMensajes.nombre_mensaje:
-            actual=actual.siguiente
-        nuevo_nodo.siguiente = actual.siguiente
-        actual.siguiente=nodoMensajes(CMensajes)
+    #     if self.primero is None or CMensajes.nombre_mensaje < self.primero.CMensajes.nombre_mensaje:
+    #         nuevo_nodo.siguiente = self.primero
+    #         self.primero=nuevo_nodo
+    #         return
+    #     actual=self.primero
+    #     while actual.siguiente and actual.siguiente.CMensajes.nombre_mensaje < CMensajes.nombre_mensaje:
+    #         actual=actual.siguiente
+    #     nuevo_nodo.siguiente = actual.siguiente
+    #     actual.siguiente=nodoMensajes(CMensajes)
+
+    def insertar(self,CMensajes):
+            nodo = nodoMensajes(CMensajes)
+
+            if self.contador == 0:
+                self.primero = nodo
+                self.ultimo = nodo
+
+            else:
+                aux = self.primero
+                anterior = None
+
+                while aux is not None and aux.CMensajes.nombre_mensaje < CMensajes.nombre_mensaje:
+                    anterior = aux
+                    aux = aux.siguiente
+                
+                if anterior is None:
+                    nodo.siguiente = self.primero
+                    self.primero = nodo
+                else:
+                    nodo.siguiente = aux
+                    anterior.siguiente = nodo
+            
+            self.contador += 1
+
 
     def imprimir(self):
         actual=self.primero

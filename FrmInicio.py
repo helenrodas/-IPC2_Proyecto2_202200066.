@@ -222,20 +222,12 @@ class FrmInicio:
     def crear_tabla_listaInstrucciones(self,listaInstrucciones):
         
         listaMensajes_frame = tk.Frame(self.main_frame)
-        
-        # if self.existeTabla == True:
-        #     # print("Entro")
-        #     listaMensajes_frame.destroy()
-        #     listaMensajes_frame = tk.Frame(self.main_frame)
-        # else:
-        #     pass
+
         
         tvInstrucciones = ttk.Treeview(listaMensajes_frame,columns=("colInstrucciones"))
         self.tablaTemp = tvInstrucciones
         
-        
-        # tvInstrucciones.delete(*tvInstrucciones.get_children())
-        # tvInstrucciones.delete(*tvInstrucciones.get_children())
+
         tvInstrucciones.column("#0",width=90)
         tvInstrucciones.column("colInstrucciones",width=90,anchor=CENTER)
         self.existeTabla = True
@@ -290,10 +282,6 @@ class FrmInicio:
         lb.pack()
         tvMensajes.pack(pady=(10, 0))  # Ajusta pady
         tablaMensajes_frame.pack(pady=20)
-        # lb.pack()
-        # tvMensajes.pack()
-        # tvMensajes.pack(side="left") 
-        # tablaMensajes_frame.pack(pady=20)
     
     
     def mostrar_instrucciones(self, listaInstrucciones,sistema,nombreMensaje):
@@ -345,99 +333,18 @@ class FrmInicio:
         tablaMensajes_frame.pack(pady=20)
         
         
-    # def calcular_tiempo(self, alturaTemp, dron_temp):
-    #     while self.tiempoTemp < alturaTemp:
-    #         print(dron_temp + " subió")
-    #         self.tiempoTemp += 1
-    #     while self.tiempoTemp > alturaTemp:
-    #         print(dron_temp + " bajó")
-    #         self.tiempoTemp -= 1
-    #     print(dron_temp + " emitio Luz")
-        
-    #     # Agregar un bucle de espera hasta que el dron alcance su objetivo
-    #     while self.tiempoTemp == alturaTemp:
-    #         print(dron_temp + " esperando")
-
-
-        
-    # def calcular_tiempo(self,alturaTemp,dron_temp):
-    #     isOff = True
-    #     self.tiempoTemp =+1
-        
-    #     if alturaTemp >= self.tiempoTemp:
-    #         self.tiempoTemp += 1
-    #         print("El dron: " + dron_temp + " subio")
-    #     elif str(self.tiempoTemp) in self.cadenaTiempo:
-    #         self.tiempoTemp += 1
-    #         print("Esperar")
-    #     else: 
-    #         self.tiempoTemp = alturaTemp + 1
-    #         self.tiempoTemp += 1
-    #         print("El dron: " + dron_temp + " bajo")
-        
-    #     print("L" + str(alturaTemp))
-        
-    
-    # def calcular_tiempo(self, alturaTemp, dron_temp):
-    #     ultima_altura = self.lista_movimientos_temp.get_alturaDron(dron_temp)
-    #     # self.tiempoTemp = 0
-    #     # if alturaTemp >= self.tiempoTemp:
-    #     #     self.tiempoTemp = alturaTemp + 1
-    #     #     print("El dron: " + dron_temp + " subio")
-    #     #     self.lista_movimientos_temp.insertar(CMovimientos(dron_temp,"Subir",alturaTemp,self.tiempoTemp))
-        
-    #     while self.tiempoTemp < alturaTemp:
-    #         self.tiempoTemp += 1
-    #         print("El dron: " + dron_temp, "sube")
-    #         self.lista_movimientos_temp.insertar(CMovimientos(dron_temp,"Subir",alturaTemp,self.tiempoTemp))
-
-            
-    #     if self.tiempoTemp == alturaTemp:
-    #         self.tiempoTemp += 1
-    #         if str(self.tiempoTemp) in self.cadenaTiempo:
-    #             # while str(self.tiempoTemp) in self.cadenaTiempo:
-    #                 self.tiempoTemp += 1
-    #                 print("El dron: " + dron_temp, "esperando")
-    #                 self.lista_movimientos_temp.insertar(CMovimientos(dron_temp,"Esperar",alturaTemp,self.tiempoTemp))
-            
-    #         print("El dron: " + dron_temp, "emite luz en:", self.tiempoTemp)
-    #         self.lista_movimientos_temp.insertar(CMovimientos(dron_temp,"Enciende Luz",alturaTemp,self.tiempoTemp))
-    #         tiempoAsString = str(self.tiempoTemp)
-    #         self.cadenaTiempo += tiempoAsString
-    #         # self.lista_movimientos_temp.insertar(CMovimientos(dron_temp,"Esperar",alturaTemp,self.tiempoTemp))
-        
-    #     if int(ultima_altura) > int(alturaTemp):
-    #         while int(ultima_altura) > int(alturaTemp):
-    #             ultima_altura -= 1
-    #             self.tiempoTemp += 1
-    #             print("El dron: " + dron_temp, "baja")
-    #             self.lista_movimientos_temp.insertar(CMovimientos(dron_temp,"Bajar",alturaTemp,self.tiempoTemp))
-
-    #     tiempo_original = self.tiempoTemp
-
-    #     tiempoAsString = str(self.tiempoTemp)
-    #     self.cadenaTiempo += tiempoAsString
-
-    #     # if self.tiempoTemp != tiempo_original:
-    #     #     print("Tiempo Encontrado")
-
-    #     # print("El dron: " + dron_temp, "enciende luz: " + tiempoAsString)
-    #     # self.lista_movimientos_temp.insertar(CMovimientos(dron_temp,"Enciende Luz",alturaTemp,self.tiempoTemp))
-    #     print("Tiempo optimo: " + str(self.tiempoTemp))
-    #     return self.tiempoTemp
-    
-    
     def calcular_tiempo(self, alturaTemp, dron_temp):
         # self.tiempoTemp = 0
         ultima_altura = self.lista_movimientos_temp.get_alturaDron(dron_temp)
         existeDron = self.lista_movimientos_temp.existe_dron(dron_temp)
-        
+        ultimo_tiempo = self.lista_movimientos_temp.get_tiempoDron(dron_temp)
         
         if existeDron:
+            self.tiempoTemp = ultimo_tiempo
             while ultima_altura < alturaTemp:
                 self.tiempoTemp += 1
                 ultima_altura +=1
-                print("El dron: " + dron_temp, "sube")
+                print("El dron: " + dron_temp, "sube",self.tiempoTemp)
                 self.lista_movimientos_temp.insertar(CMovimientos(dron_temp,"Subir",alturaTemp,self.tiempoTemp))
 
 
@@ -446,65 +353,48 @@ class FrmInicio:
                 while int(ultima_altura) > int(alturaTemp):
                     ultima_altura -= 1
                     self.tiempoTemp += 1
-                    print("El dron: " + dron_temp, "baja")
+                    print("El dron: " + dron_temp, "baja",self.tiempoTemp)
                     self.lista_movimientos_temp.insertar(CMovimientos(dron_temp,"Bajar",alturaTemp,self.tiempoTemp))
             
-            if self.tiempoTemp == alturaTemp:
-                self.tiempoTemp += 1
+            # if self.tiempoTemp == alturaTemp:
+                # self.tiempoTemp += 1
                 if str(self.tiempoTemp) in self.cadenaTiempo:
                     while str(self.tiempoTemp) in self.cadenaTiempo:
                         self.tiempoTemp += 1
-                        print("El dron: " + dron_temp, "esperando")
+                        print("El dron: " + dron_temp, "esperando",self.tiempoTemp)
                         self.lista_movimientos_temp.insertar(CMovimientos(dron_temp,"Esperar",alturaTemp,self.tiempoTemp))
             
-            print("El dron: " + dron_temp, "emite luz en:", self.tiempoTemp)
-            self.lista_movimientos_temp.insertar(CMovimientos(dron_temp,"Enciende Luz",alturaTemp,self.tiempoTemp))
+            print("El dron: " + dron_temp, "emite luz en:", self.tiempoTemp+1)
+            self.lista_movimientos_temp.insertar(CMovimientos(dron_temp,"Enciende Luz",alturaTemp,self.tiempoTemp+1))
             tiempoAsString = str(self.tiempoTemp)
             self.cadenaTiempo += tiempoAsString
             # self.ultimaAltura = self.tiempoTemp
-
-        # while str(self.tiempoTemp) in self.cadenaTiempo:
-        #     self.tiempoTemp += 1
-        #     print("El dron: " + dron_temp, "esperando")
-            return self.tiempoTemp
+            return self.tiempoTemp+1
         else:
             self.tiempoTemp = 0
             while self.tiempoTemp < alturaTemp:
                 self.tiempoTemp += 1
-                print("El dron: " + dron_temp, "sube")
+                print("El dron: " + dron_temp, "sube",self.tiempoTemp)
                 self.lista_movimientos_temp.insertar(CMovimientos(dron_temp,"Subir",alturaTemp,self.tiempoTemp))
 
 
-
-        # if int(ultima_altura) > int(alturaTemp):
-        #     while int(ultima_altura) > int(alturaTemp):
-        #         ultima_altura -= 1
-        #         self.tiempoTemp += 1
-        #         print("El dron: " + dron_temp, "baja")
-        #         self.lista_movimientos_temp.insertar(CMovimientos(dron_temp,"Bajar",alturaTemp,self.tiempoTemp))
-        
-
             if self.tiempoTemp == alturaTemp:
-                self.tiempoTemp += 1
+                # self.tiempoTemp += 1
                 if str(self.tiempoTemp) in self.cadenaTiempo:
                     while str(self.tiempoTemp) in self.cadenaTiempo:
                         self.tiempoTemp += 1
-                        print("El dron: " + dron_temp, "esperando")
+                        print("El dron: " + dron_temp, "esperando",self.tiempoTemp)
                         self.lista_movimientos_temp.insertar(CMovimientos(dron_temp,"Esperar",alturaTemp,self.tiempoTemp))
                 
-                print("El dron: " + dron_temp, "emite luz en:", self.tiempoTemp)
-                self.lista_movimientos_temp.insertar(CMovimientos(dron_temp,"Enciende Luz",alturaTemp,self.tiempoTemp))
+                print("El dron: " + dron_temp, "emite luz en:", self.tiempoTemp+1)
+                self.lista_movimientos_temp.insertar(CMovimientos(dron_temp,"Enciende Luz",alturaTemp,self.tiempoTemp+1))
                 tiempoAsString = str(self.tiempoTemp)
                 self.cadenaTiempo += tiempoAsString
                 # self.ultimaAltura = self.tiempoTemp
 
-            # while str(self.tiempoTemp) in self.cadenaTiempo:
-            #     self.tiempoTemp += 1
-            #     print("El dron: " + dron_temp, "esperando")
-            return self.tiempoTemp
+            
+            return self.tiempoTemp+1
 
-
-    
     
     def inicializar(self):
         self.readFile.borrarListas()
