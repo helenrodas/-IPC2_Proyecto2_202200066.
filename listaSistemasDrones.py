@@ -40,14 +40,16 @@ class listaSistemasDrones:
     
     def generar_dot(self):
         dot_code = """
-        
+
         """
 
         aux = self.primero
         while aux:
             dot_code += f"""
                 <tr>
-                    <td>{aux.CSistemasDrones.nombre_sistema}</td>
+                    <td border="0"></td>
+                    <td colspan="3">{aux.CSistemasDrones.nombre_sistema}</td>
+                    
                 </tr>
                 """+aux.CSistemasDrones.listaContenido.generar_dot()+aux.CSistemasDrones.listaAlturasSistema.generar_dot()+"""
             """
@@ -57,7 +59,7 @@ class listaSistemasDrones:
         return dot_code
 
     def recorrer_grafica(self):
-        f = open('bb.dot','w')
+        f = open('bb.dot','w',encoding="utf-8")
 
         dot_code = f"""
         digraph G {{

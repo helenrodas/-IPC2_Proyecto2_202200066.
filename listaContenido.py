@@ -37,8 +37,8 @@ class listaContenido:
         dot_code = """
         
             <tr>
-                <td>Dron</td>
                 
+                <td border="0"></td>
             
         """
 
