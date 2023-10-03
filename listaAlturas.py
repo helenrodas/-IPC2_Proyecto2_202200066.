@@ -65,12 +65,11 @@ class listaAlturas:
         
         
         actual =self.primero
-        sentinela_de_filas=actual.CAlturas.altura 
+        sentinela_de_filas=None
         fila_iniciada=False
         while actual != None:
-
-            if int(sentinela_de_filas)!=int(actual.CAlturas.altura) :
-                dot_code += f"""</tr><tr><td border="0"></td>"""
+            if sentinela_de_filas is None or int(sentinela_de_filas)!=int(actual.CAlturas.altura) :
+                dot_code += f"""</tr><tr><td border="1">{str(actual.CAlturas.altura)}</td>"""
                 sentinela_de_filas=actual.CAlturas.altura 
                 fila_iniciada=False
 

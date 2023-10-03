@@ -38,8 +38,8 @@ class listaContenido:
         
             <tr>
                 
-                <td border="0"></td>
-            
+        <td>Altura</td>
+                
         """
 
         aux = self.primero
@@ -53,6 +53,7 @@ class listaContenido:
             """
             aux = aux.siguiente
         dot_code += f"""
+            
         </tr>
         """
 
@@ -60,7 +61,7 @@ class listaContenido:
         dot_code += """<tr><td border="0"></td>"""
         while actual1:
             dot_code += """
-        
+            
             
             """   
             actual1 = actual1.siguiente

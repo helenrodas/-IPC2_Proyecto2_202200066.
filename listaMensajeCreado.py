@@ -1,3 +1,4 @@
+import os
 from nodoMensajeCreado import nodoMensajeCreado
 from CMensajeCreado import CMensajeCreado
 import xml.etree.ElementTree as ET
@@ -86,6 +87,9 @@ class listaMensajeCreado:
             else:
                 element.tail = '\n' + indent * (level-1)  
             queue[0:0] = children
+    
+    
+    
     
     
     def __iter__(self):

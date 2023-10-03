@@ -1,3 +1,4 @@
+import os
 from nodoMovimientos import nodoMovimientos
 from CMovimientos import CMovimientos
 
@@ -52,6 +53,97 @@ class listaMovimientos:
             actual = self.primero
             self.primero = self.primero.siguiente
             del actual
+    
+    # def generar_dot(self):
+    #     dot_code = """
+        
+            
+                
+    #     <td>Tiempo</td>
+                
+    #     """
+
+    #     drone_names_added = set()
+
+    #     aux = self.primero
+    #     while aux:
+    #         dron = aux.CMovimientos.dron
+    #         altura = aux.CMovimientos.altura
+    #         movimiento = aux.CMovimientos.movimiento
+
+    #         # Si el nombre del dron no está en la lista, agrégalo al DOT
+    #         if dron not in drone_names_added:
+    #             dot_code += f"""
+    #                 <td bgcolor="lightgray">{dron}</td>
+    #             """
+    #             drone_names_added.add(dron)
+
+    #         dot_code += f"""
+    #             </tr>
+    #             <tr>
+    #                 <td>{altura}</td>
+    #                 <td>{movimiento}</td>
+    #             </tr>
+    #         """
+
+    #         aux = aux.siguiente
+
+    #     dot_code += "</tr>"
+
+    #     return dot_code
+    
+    def generar_dot(self):
+        dot_code = """
+        
+            <tr>
+                
+        <td>Tiempo</td>
+                
+        """
+        drone_names_added = set()
+        aux = self.primero
+        while aux:
+            dron = aux.CMovimientos.dron
+            if dron not in drone_names_added:
+                dot_code += f"""
+                
+                    
+                    <td>{aux.CMovimientos.dron}</td>
+                    
+
+                """
+                
+                drone_names_added.add(dron)
+                
+            dot_code += f"""
+            <tr>
+                <td>{aux.CMovimientos.movimiento}</td>
+            """
+            aux = aux.siguiente
+        dot_code += f"""
+            
+        </tr>
+        """
+
+        dot_code += "</tr>"
+
+        return dot_code
+
+
+    def recorrer_grafica(self):
+        f = open('aa.dot', 'w', encoding="utf-8")
+
+        dot_code = f"""
+        digraph G {{
+            node [shape=box];
+            tbl [label=<<table border="0" cellborder="1" cellspacing="0">{self.generar_dot()}</table>>];
+        }}
+        """
+
+        f.write(dot_code)
+        f.close()
+        os.environ["PATH"] += os.pathsep + 'C:/Program Files/Graphviz/bin'
+        os.system(f"dot -Tpng aa.dot -o Movimientos.png")
     
     
     def __iter__(self):

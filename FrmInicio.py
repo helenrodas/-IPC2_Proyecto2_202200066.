@@ -111,7 +111,7 @@ class FrmInicio:
         gestion_mensajes_menu.add_separator()
         gestion_mensajes_menu.add_command(label="Ver instrucciones de mensajes", command=self.mostrar_tablaMensajes)
         gestion_mensajes_menu.add_separator()
-        gestion_mensajes_menu.add_command(label="Grafica instrucciones", command=self.clear_page)
+        gestion_mensajes_menu.add_command(label="Grafica instrucciones", command=self.graficar_lista_movimientos)
         
         gestion_mensajes_menu.post(menu_x, menu_y)
 
@@ -406,6 +406,10 @@ class FrmInicio:
     
     def graficar_lista_drones(self):
         self.readFile.graficar()
+        messagebox.showinfo("Grafica", "Grafica creada")
+    
+    def graficar_lista_movimientos(self):
+        self.lista_movimientos_temp.recorrer_grafica()
         messagebox.showinfo("Grafica", "Grafica creada")
     
     def clear_page(self):

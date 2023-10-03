@@ -1,0 +1,81 @@
+
+        digraph G {
+            node [shape=box];
+            tbl [label=<<table border="0" cellborder="1" cellspacing="0">
+        
+            <tr>
+                
+        <td>Tiempo</td>
+                
+        
+                
+                    
+                    <td>DronW</td>
+                    
+
+                
+            <tr>
+                <td>Subir</td>
+            
+            <tr>
+                <td>Enciende Luz</td>
+            
+                
+                    
+                    <td>DronX</td>
+                    
+
+                
+            <tr>
+                <td>Subir</td>
+            
+            <tr>
+                <td>Esperar</td>
+            
+            <tr>
+                <td>Enciende Luz</td>
+            
+                
+                    
+                    <td>DronY</td>
+                    
+
+                
+            <tr>
+                <td>Subir</td>
+            
+            <tr>
+                <td>Esperar</td>
+            
+            <tr>
+                <td>Esperar</td>
+            
+            <tr>
+                <td>Enciende Luz</td>
+            
+                
+                    
+                    <td>DronZ</td>
+                    
+
+                
+            <tr>
+                <td>Subir</td>
+            
+            <tr>
+                <td>Esperar</td>
+            
+            <tr>
+                <td>Esperar</td>
+            
+            <tr>
+                <td>Esperar</td>
+            
+            <tr>
+                <td>Enciende Luz</td>
+            
+            
+        </tr>
+        </tr></table>>];
+        }
+        
