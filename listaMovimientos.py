@@ -54,43 +54,6 @@ class listaMovimientos:
             self.primero = self.primero.siguiente
             del actual
     
-    # def generar_dot(self):
-    #     dot_code = """
-        
-            
-                
-    #     <td>Tiempo</td>
-                
-    #     """
-
-    #     drone_names_added = set()
-
-    #     aux = self.primero
-    #     while aux:
-    #         dron = aux.CMovimientos.dron
-    #         altura = aux.CMovimientos.altura
-    #         movimiento = aux.CMovimientos.movimiento
-
-    #         # Si el nombre del dron no está en la lista, agrégalo al DOT
-    #         if dron not in drone_names_added:
-    #             dot_code += f"""
-    #                 <td bgcolor="lightgray">{dron}</td>
-    #             """
-    #             drone_names_added.add(dron)
-
-    #         dot_code += f"""
-    #             </tr>
-    #             <tr>
-    #                 <td>{altura}</td>
-    #                 <td>{movimiento}</td>
-    #             </tr>
-    #         """
-
-    #         aux = aux.siguiente
-
-    #     dot_code += "</tr>"
-
-    #     return dot_code
     
     def generar_dot(self):
         dot_code = """

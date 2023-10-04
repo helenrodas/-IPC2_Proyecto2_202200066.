@@ -398,6 +398,8 @@ class FrmInicio:
     
     def inicializar(self):
         self.readFile.borrarListas()
+        self.lista_mensajeCreado_temp.eliminar_datos()
+        self.lista_movimientos_temp.eliminar_datos()
         messagebox.showinfo("Inicializar", "Se reinicio el programa correctamente")
     
     def crear_xml_salida(self):

@@ -88,7 +88,11 @@ class listaMensajeCreado:
                 element.tail = '\n' + indent * (level-1)  
             queue[0:0] = children
     
-    
+    def eliminar_datos(self):
+        while self.primero:
+            actual = self.primero
+            self.primero = self.primero.siguiente
+            del actual
     
     
     

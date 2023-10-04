@@ -93,6 +93,8 @@ class readFile():
     def borrarListas(self):
         self.lista_sistemas_temp.eliminar_datos()
         self.lista_drones_temp.eliminar_datos()
+        self.lista_mensajes_temp.eliminar_datos()
+        
     
     def get_listaDrones(self):
         return self.lista_drones_temp
