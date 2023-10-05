@@ -152,7 +152,7 @@ class FrmInicio:
         
         nombre_lbl = Label(agregarDron_frame, text="Ingresa nombre dron: ", font=("Arial", 14), justify="center")
         nombre_input = tk.Entry(agregarDron_frame, textvariable=dron)
-        agregar_btn = tk.Button(agregarDron_frame, text="Agregar", width=12, height=1, bg="LightGreen", command=lambda:self.registrar_dron(nombre_input.get()))
+        agregar_btn = tk.Button(agregarDron_frame, text="Agregar", width=12, height=1, bg="yellow", command=lambda:self.registrar_dron(nombre_input.get()))
         # nombre_input.delete(0,'end')  Revisar este metodo porque aun no funciona
         
         lb.pack()
